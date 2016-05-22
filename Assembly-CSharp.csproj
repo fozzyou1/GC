@@ -45,6 +45,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\CGGarbageItem.cs" />
      <Compile Include="Assets\CharController.cs" />
      <Compile Include="Assets\Scripts\CGFieldManager.cs" />
      <Compile Include="Assets\UnityChan\Scripts\AutoBlink.cs" />

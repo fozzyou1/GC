@@ -3,16 +3,9 @@ using System.Collections;
 
 public class CGFieldManager : MonoBehaviour {
 
-	// 저 에디터가 너무 구려서 그래요
+	public CameraController cameraController;
+	public CharController charController;
 
-	void Start () {
-		
-	}
-	
 
-	void Update () {
-	
-	}
 
-	
 }
