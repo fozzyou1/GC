@@ -45,9 +45,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\CGGarbageItem.cs" />
      <Compile Include="Assets\CharController.cs" />
-     <Compile Include="Assets\Scripts\CGFieldManager.cs" />
+     <Compile Include="Assets\GCGarbageItem.cs" />
+     <Compile Include="Assets\GCGenPoint.cs" />
+     <Compile Include="Assets\GCItemCreator.cs" />
+     <Compile Include="Assets\GCLevelMap.cs" />
      <Compile Include="Assets\UnityChan\Scripts\AutoBlink.cs" />
      <Compile Include="Assets\UnityChan\Scripts\AutoBlinkforSD.cs" />
      <Compile Include="Assets\UnityChan\Scripts\CameraController.cs" />

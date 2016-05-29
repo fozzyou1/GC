@@ -5,7 +5,7 @@ public enum ItemStatus{
 	None, Active
 }
 
-public class CGGarbageItem : MonoBehaviour {
+public class GCGarbageItem : MonoBehaviour {
 
 	private ItemStatus status = ItemStatus.None;
 

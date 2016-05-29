@@ -8,17 +8,23 @@ public class CharController : MonoBehaviour {
 	public float walkSpeed = 15f;
 	public float runSpeed = 30f;
 
+	public float jumpSpeed = 5f;
+	public float gravity = 9.8f;
+	public float ySpeed = 0;
+
+	public bool isJump = false;
+
 	public bool isDebug = false;
 
-	Rigidbody _rigidbody;
+	CharacterController _charCtrl;
 	Animator anim;
 
-	public List<CGGarbageItem> closePropList = new List<CGGarbageItem>();
-	private CGGarbageItem curSelectProp = null;
+	public List<GCGarbageItem> closePropList = new List<GCGarbageItem>();
+	private GCGarbageItem curSelectProp = null;
 
 	// Use this for initialization
 	void Start () {
-		_rigidbody = GetComponent<Rigidbody>();
+		_charCtrl = GetComponent<CharacterController>();
 		anim = GetComponent<Animator>();
 	}
 
@@ -36,35 +42,83 @@ public class CharController : MonoBehaviour {
 			isRun = true;
 		}
 
+		if(Input.GetKeyDown(KeyCode.Space)){
+			Jump();
+		}
+
+		anim.SetFloat("ySpeed", (ySpeed * 0.1f));
 		anim.SetFloat("Speed", Mathf.Max(Mathf.Abs(hor), Mathf.Abs(ver)));
 		anim.SetBool("Run", isRun);
 
+		float curSpeed = walkSpeed;
 		if(isRun){
-			_rigidbody.velocity = new Vector3( hor, 0, ver ) * Time.deltaTime * runSpeed;
-
-		}else{
-			_rigidbody.velocity = new Vector3( hor, 0, ver ) * Time.deltaTime * walkSpeed;
+			curSpeed = runSpeed;
 		}
 
+		// Falling Speed
+		if( IsGrounded() ){
+			ySpeed = 0;
+			isJump = false;
+		}else{
+			ySpeed -= gravity * Time.deltaTime;
+			
+		}
+
+		Vector3 MoveVector = new Vector3( hor, ySpeed, ver ) * curSpeed;
+
+		// Move
+		_charCtrl.Move(MoveVector * Time.deltaTime);
+
 		CharRotation(hor, ver);
+	}
+
+	public bool IsGrounded(){
+		return (IsGroundedByCController() || IsGroundedByRaycast()) && ySpeed < 0;      //this also doesn't call raycast if we know we are grounded
+
+	}
+
+	public bool IsGroundedByCController()
+	{
+		if(_charCtrl.isGrounded) 	
+			return true;
+		else
+			return false;
+	}
+
+	bool IsGroundedByRaycast(){
+		RaycastHit hit;
+		Debug.DrawRay(transform.position, (-Vector3.up * .1f), Color.green);       //draw the line to be seen in scene window
+
+		if(Physics.Raycast(transform.position, -Vector3.up, out hit, 0.1f)){      //if we hit something
+			return true;
+		}
+		return false;
+	}
+
+	void Jump(){
+		ySpeed = jumpSpeed;
+		isJump = true;
 	}
 		
 	void CharRotation(float hor, float ver){
 		if( !(Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow) || 
-			Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow)) )
+			Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow)) ){
+			//print("Return");
 			return;
+		}
 
 		Vector3 targetLook = transform.position + new Vector3(hor, 0, ver);
+		//print("rotation " + targetLook);
 		transform.LookAt(targetLook);
 	}
 
-	public void OnCloseProp(CGGarbageItem item){
+	public void OnCloseProp(GCGarbageItem item){
 		closePropList.Add(item);
 
 		SelectInPropsList();
 	}
 
-	public void OnLostProp(CGGarbageItem item){
+	public void OnLostProp(GCGarbageItem item){
 		closePropList.Remove(item);
 
 		SelectInPropsList();
@@ -84,7 +138,6 @@ public class CharController : MonoBehaviour {
 			for (int i = 0; i < closePropList.Count; i++) {
 				Vector3 charToItem = transform.position - closePropList[i].transform.position;
 				float propAngle = Vector3.Dot(charToItem.normalized, transform.forward);
-				print(i + ": " + propAngle);
 				if( _min > propAngle )
 				{
 					_min = propAngle;
@@ -99,12 +152,28 @@ public class CharController : MonoBehaviour {
 			print("curSelectProp: " + curSelectProp);
 	}
 
-	void ChangeSelectProp(CGGarbageItem targetProp){
-		if(targetProp == null)
+	void ChangeSelectProp(GCGarbageItem targetProp, bool direct = true){
+		if(targetProp == null){
 			curSelectProp = null;
-		
+			return;
+		}
+
+		if(direct){
+			GetProp(targetProp);
+
+			return;
+		}
+
 		if(curSelectProp != targetProp)
 			curSelectProp = targetProp;
+	}
+
+	void GetProp(GCGarbageItem prop){
+		if(isDebug)
+			print("Get " + prop.name);
+		
+		closePropList.Remove(prop);
+		Destroy(prop.gameObject);
 	}
 
 }

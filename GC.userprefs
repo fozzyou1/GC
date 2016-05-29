@@ -1,12 +1,16 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/CharController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/UnityChan/Scripts/SpringBone.cs">
     <Files>
-      <File FileName="Assets/UnityChan/Scripts/CameraController.cs" Line="5" Column="25" />
-      <File FileName="Assets/UnityChan/Scripts/FaceUpdate.cs" Line="67" Column="6" />
-      <File FileName="Assets/UnityChan/Scripts/IdleChanger.cs" Line="77" Column="3" />
-      <File FileName="Assets/UnityChan/Scripts/IKLookAt.cs" Line="88" Column="31" />
-      <File FileName="Assets/CharController.cs" Line="44" Column="28" />
+      <File FileName="Assets/CharController.cs" Line="76" Column="76" />
+      <File FileName="Assets/UnityChan/Scripts/CameraController.cs" Line="1" Column="1" />
+      <File FileName="Assets/GCItemCreator.cs" Line="17" Column="4" />
+      <File FileName="Assets/GCGarbageItem.cs" Line="9" Column="2" />
+      <File FileName="Assets/GCLevelMap.cs" Line="10" Column="26" />
+      <File FileName="Assets/GCGenPoint.cs" Line="13" Column="3" />
+      <File FileName="Assets/UnityChan/Scripts/SpringManager.cs" Line="74" Column="32" />
+      <File FileName="Assets/UnityChan/Scripts/SpringBone.cs" Line="109" Column="33" />
+      <File FileName="Assets/UnityChan/Scripts/SpringCollider.cs" Line="14" Column="15" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

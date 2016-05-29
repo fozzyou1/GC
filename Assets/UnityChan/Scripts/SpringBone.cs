@@ -18,6 +18,8 @@ namespace UnityChan
 		//次のボーン
 		public Transform child;
 
+		private float scale = 3f;
+
 		//ボーンの向き
 		public Vector3 boneAxis = new Vector3 (-1.0f, 0.0f, 0.0f);
 		public float radius = 0.05f;
@@ -52,6 +54,8 @@ namespace UnityChan
 			//Kobayashi:Reference for "SpringManager" component with unitychan
 			// GameObject.Find("unitychan_dynamic").GetComponent<SpringManager>();
 			managerRef = GetParentSpringManager (transform);
+
+			radius = radius * scale;
 		}
 
 		private SpringManager GetParentSpringManager (Transform t)
